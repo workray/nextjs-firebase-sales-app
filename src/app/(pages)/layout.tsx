@@ -18,7 +18,6 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
     prevAuth.current = authenticated;
 
     if (!loading) router.replace(authenticated ? "/dashboard" : "/login");
-    logout();
   }, [loading, authenticated, router]);
 
   useEffect(() => {

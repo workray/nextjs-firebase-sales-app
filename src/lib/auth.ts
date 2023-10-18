@@ -11,7 +11,7 @@ import { auth } from "./firebase";
 export const login = async (email: string, password: string) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
-    message.success("Authentication successful 🎉");
+    message.success("Successfully logged in 🎉");
   } catch (error) {
     console.error(error);
     message.error("Incorrect Email/Password ❌");
@@ -25,7 +25,7 @@ export const signUp = async (email: string, password: string, name: string) => {
       password
     );
     await updateProfile(userCredential.user, { displayName: name });
-    message.success("Signup successful!");
+    message.success("Successful registered!");
   } catch (error) {
     message.error("Failed signup ❌");
   }
