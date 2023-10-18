@@ -3,9 +3,15 @@
 import Spinner from "@/components/Spinner";
 import { useAuthState } from "@/providers/auth";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useLayoutEffect, useRef } from "react";
-import { logout } from "@/lib/auth";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+} from "react";
 import { Header } from "@/components/Header";
+import { Sidebar } from "@/components/Sidebar";
 
 const PageLayout = ({ children }: { children: React.ReactNode }) => {
   const { loading, authenticated } = useAuthState();
@@ -13,28 +19,38 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
   const prevAuth = useRef(authenticated);
 
+  const isAuthPath = useMemo(
+    () => pathname === "/login" || pathname === "/signup",
+    [pathname]
+  );
+  const changeRouter = useCallback(() => {
+    if (loading) return;
+    if (authenticated) {
+      isAuthPath && router.replace("/");
+    } else {
+      !isAuthPath && router.replace("/login");
+    }
+  }, [authenticated, isAuthPath, loading, router]);
+
   useLayoutEffect(() => {
     if (prevAuth.current === authenticated) return;
     prevAuth.current = authenticated;
 
-    if (!loading) router.replace(authenticated ? "/dashboard" : "/login");
-  }, [loading, authenticated, router]);
+    changeRouter();
+  }, [loading, authenticated, router, changeRouter, isAuthPath]);
 
   useEffect(() => {
-    if (loading) return;
-    if (pathname === "/login" || pathname === "/signup") {
-      authenticated && router.replace("/dashboard");
-    } else if (!authenticated) {
-      router.replace("/login");
-    }
-  }, [authenticated, loading, pathname, router]);
-
-  if (loading) return <Spinner />;
+    changeRouter();
+  }, [loading, authenticated, router, changeRouter, isAuthPath]);
 
   return (
-    <main className="flex flex-col items-center justify-center">
-      <Header />
-      {children}
+    <main className="flex w-full min-h-[100vh] relative">
+      {authenticated && <Sidebar />}
+      <div className="flex flex-col flex-grow items-center justify-start bg-gray-100 h-[100vh]">
+        <Header />
+        {children}
+      </div>
+      {loading && <Spinner />}
     </main>
   );
 };
