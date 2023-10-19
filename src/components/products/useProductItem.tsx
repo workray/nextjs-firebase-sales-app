@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { CategoryItemProps } from "./types";
-import { deleteCategory } from "@/lib/categories";
+import { ProductItemProps } from "./types";
+import { deleteProduct } from "@/lib/products";
 
-export default function useCategoryItem({ item }: CategoryItemProps) {
+export default function useProductItem({ item }: ProductItemProps) {
   const [deleting, setDeleting] = useState<boolean>(false);
 
   const handleDelete: React.MouseEventHandler<HTMLButtonElement> = async (
@@ -10,7 +10,7 @@ export default function useCategoryItem({ item }: CategoryItemProps) {
   ) => {
     e.preventDefault();
     setDeleting(true);
-    await deleteCategory(item.id, item.name);
+    await deleteProduct(item.id, item.name);
     setDeleting(false);
   };
 

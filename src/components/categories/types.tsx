@@ -1,5 +1,5 @@
-import { TItem } from "@/types";
+import { TCategory } from "@/types";
 
 export type CategoryItemProps = {
-  item: TItem;
+  item: TCategory;
 };

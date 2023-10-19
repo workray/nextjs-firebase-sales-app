@@ -1,6 +1,6 @@
 import React from "react";
 import useCategoryList from "./useCategoryList";
-import { TItem } from "@/types";
+import { TCategory } from "@/types";
 import CategoryItem from "./CategoryItem";
 
 export default function CategoryList() {
@@ -13,7 +13,7 @@ export default function CategoryList() {
       </h3>
       {loading && <p>Loading...</p>}
       <ul>
-        {categories?.map((item: TItem) => (
+        {categories?.map((item: TCategory) => (
           <CategoryItem key={item.id} item={item} />
         ))}
       </ul>
