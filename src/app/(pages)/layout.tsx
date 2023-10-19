@@ -45,7 +45,7 @@ const PageLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <main className="flex w-full min-h-[100vh] relative">
-      {authenticated && <Sidebar />}
+      {!isAuthPath && <Sidebar />}
       <div className="flex flex-col flex-grow items-center justify-start bg-gray-100 h-[100vh]">
         <Header />
         {children}

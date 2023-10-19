@@ -45,7 +45,6 @@ export const getCategories = (setCategories: any) =>
   onSnapshot(
     collection(db, "categories"),
     (doc) => {
-      console.log(doc);
       const docs: any = [];
       doc.forEach((d: any) => {
         docs.push({ ...d.data(), id: d.id });

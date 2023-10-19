@@ -6,7 +6,7 @@ import { useAuthState } from "@/providers/auth";
 import { useMemo } from "react";
 
 const Header = () => {
-  const { authenticated } = useAuthState();
+  const { loading, authenticated } = useAuthState();
   const pathname = usePathname();
   const title = useMemo(() => {
     if (!authenticated) return "";
@@ -25,21 +25,23 @@ const Header = () => {
     <div className="border-b shadow-sm sticky top-0 z-40 w-full bg-white">
       <header className="flex justify-between items-center px-10 mx-auto">
         <h1>{title}</h1>
-        <div>
-          <ul className="flex space-x-10">
-            {!authenticated && (
-              <>
-                <NavItem label="Login" route="/login" />
-                <NavItem label="Register" route="/signup" />
-              </>
-            )}
-            {authenticated && (
-              <>
-                <NavItem label="Profile" route="/profile" />
-              </>
-            )}
-          </ul>
-        </div>
+        {!loading && (
+          <div>
+            <ul className="flex space-x-10">
+              {!authenticated && (
+                <>
+                  <NavItem label="Login" route="/login" />
+                  <NavItem label="Register" route="/signup" />
+                </>
+              )}
+              {authenticated && (
+                <>
+                  <NavItem label="Profile" route="/profile" />
+                </>
+              )}
+            </ul>
+          </div>
+        )}
       </header>
     </div>
   );

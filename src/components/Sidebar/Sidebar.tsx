@@ -6,20 +6,25 @@ import { useRouter } from "next/navigation";
 import { logout } from "@/lib/auth";
 import { SidebarItemProps } from "./types";
 import SidebarItem from "./SidebarItem";
+import { useAuthDispatch } from "@/providers/auth";
 
-const items: SidebarItemProps[] = [
-  { icon: RiDashboardFill, label: "Dashboard", href: "/" },
-  { icon: BsFillBarChartFill, label: "Sales", href: "/sales" },
-  { icon: MdShoppingCart, label: "Products", href: "/products" },
-  { icon: MdCategory, label: "Categories", href: "/categories" },
-  {
-    icon: BsPersonFillLock,
-    label: "Log Out",
-    href: "#",
-    onClick: () => logout,
-  },
-];
 export default function SideNav() {
+  const dispatch = useAuthDispatch();
+  const items: SidebarItemProps[] = [
+    { icon: RiDashboardFill, label: "Dashboard", href: "/" },
+    { icon: BsFillBarChartFill, label: "Sales", href: "/sales" },
+    { icon: MdShoppingCart, label: "Products", href: "/products" },
+    { icon: MdCategory, label: "Categories", href: "/categories" },
+    {
+      icon: BsPersonFillLock,
+      label: "Log Out",
+      href: "/",
+      onClick: () => {
+        dispatch({ type: "START_LOADING" });
+        logout();
+      },
+    },
+  ];
   return (
     <div className="w-60 md:block hidden relative">
       <nav className="w-60 fixed left-0 h-[100vh] bg-[#160F3F]">

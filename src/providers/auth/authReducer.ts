@@ -24,6 +24,11 @@ const authReducer = (state: TAuthState, action: TAuthAction): TAuthState => {
           ...action.payload,
         } as TUser,
       };
+    case "START_LOADING":
+      return {
+        ...state,
+        loading: true,
+      };
     case "STOP_LOADING":
       return {
         ...state,

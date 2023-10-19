@@ -6,7 +6,6 @@ import {
 import { TAuthDispatch, TUser } from "@/types/auth";
 import React, { useContext, useEffect, useReducer } from "react";
 import authReducer from "./authReducer";
-import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
