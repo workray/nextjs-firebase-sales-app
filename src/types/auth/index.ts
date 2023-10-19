@@ -1,6 +1,7 @@
 export type TUser = {
   email: string;
   uid: string;
+  name?: string;
 } | null;
 
 export type TAuthState = {
